@@ -21,19 +21,19 @@ export default class CameraExample extends React.Component {
   async componentWillMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({ hasCameraPermission: status === 'granted' });
+  }
 
+  refresh() {
     CameraRoll.getPhotos({ first: 10 }).then(({ edges }) => {
-      console.log(edges);
-      return this.setState({ images: edges.map(edge => edge.node.image) });
+      this.setState({ images: edges.map(edge => edge.node.image) });
     });
   }
 
   snap() {
     if (this.camera) {
       this.camera.takePictureAsync().then(uri => {
-        console.log(uri);
         CameraRoll.saveToCameraRoll(uri).then(newUri => {
-          console.log(newUri);
+          this.refresh();
         });
       });
     }
@@ -99,13 +99,15 @@ export default class CameraExample extends React.Component {
             </View>
           </Camera>
           <View style={{ backgroundColor: 'yellow', width, height }}>
-            {this.state.images.map(image =>
-              <Image
-                key={image.uri}
-                style={{ width: 50, height: 50 }}
-                source={{ uri: image.uri }}
-              />
-            )}
+            <ScrollView pagingEnabled showsVerticalScrollIndicator={false}>
+              {this.state.images.map(image =>
+                <Image
+                  key={image.uri}
+                  style={{ width, height }}
+                  source={{ uri: image.uri }}
+                />
+              )}
+            </ScrollView>
           </View>
         </ScrollView>
       );
