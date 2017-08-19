@@ -11,6 +11,7 @@ import {
   Animated,
 } from 'react-native';
 import { Camera, Permissions } from 'expo';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default class CameraExample extends React.Component {
   state = {
@@ -50,28 +51,35 @@ export default class CameraExample extends React.Component {
     } else if (hasCameraPermission === false) {
       return <Text>No access to camera</Text>;
     } else {
+      const minScale = 1;
+      const maxScale = 2;
       const scale1 = this.state.scrollX.interpolate({
         inputRange: [0, width],
-        outputRange: [2, 1],
+        outputRange: [maxScale, minScale],
         extrapolate: 'clamp',
       });
       const scale2 = this.state.scrollX.interpolate({
         inputRange: [0, width, width * 2],
-        outputRange: [1, 2, 1],
+        outputRange: [minScale, maxScale, minScale],
         extrapolate: 'clamp',
       });
       const scale3 = this.state.scrollX.interpolate({
         inputRange: [width, width * 2],
-        outputRange: [1, 2],
+        outputRange: [minScale, maxScale],
         extrapolate: 'clamp',
       });
+
+      const iconProps = {
+        size: 30,
+        color: 'white',
+      };
 
       return (
         <View style={{ flex: 1 }}>
           <Animated.View
             style={{
               position: 'absolute',
-              top: 0,
+              top: 20,
               left: 0,
               zIndex: 100,
               width: width * 2,
@@ -89,17 +97,28 @@ export default class CameraExample extends React.Component {
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
-              backgroundColor: 'yellow',
             }}>
-            <Animated.Text style={{ transform: [{ scale: scale1 }] }}>
-              1
-            </Animated.Text>
-            <Animated.Text style={{ transform: [{ scale: scale2 }] }}>
-              2
-            </Animated.Text>
-            <Animated.Text style={{ transform: [{ scale: scale3 }] }}>
-              3
-            </Animated.Text>
+            <Animated.View
+              style={{
+                backgroundColor: 'transparent',
+                transform: [{ scale: scale1 }],
+              }}>
+              <MaterialIcons name={'people'} {...iconProps} />
+            </Animated.View>
+            <Animated.View
+              style={{
+                backgroundColor: 'transparent',
+                transform: [{ scale: scale2 }],
+              }}>
+              <MaterialIcons name={'camera-alt'} {...iconProps} />
+            </Animated.View>
+            <Animated.View
+              style={{
+                backgroundColor: 'transparent',
+                transform: [{ scale: scale3 }],
+              }}>
+              <MaterialIcons name={'camera-roll'} {...iconProps} />
+            </Animated.View>
           </Animated.View>
           <ScrollView
             horizontal
@@ -131,8 +150,9 @@ export default class CameraExample extends React.Component {
                   flex: 1,
                   backgroundColor: 'transparent',
                   flexDirection: 'row',
+                  justifyContent: 'center',
                 }}>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   style={{
                     flex: 0.1,
                     alignSelf: 'flex-end',
@@ -150,18 +170,17 @@ export default class CameraExample extends React.Component {
                     style={{ fontSize: 18, marginBottom: 10, color: 'white' }}>
                     {' '}Flip{' '}
                   </Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <TouchableOpacity
                   style={{
-                    flex: 0.1,
+                    flex: 1,
                     alignSelf: 'flex-end',
+                    marginBottom: 20,
                     alignItems: 'center',
                   }}
+                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
                   onPress={this.snap.bind(this)}>
-                  <Text
-                    style={{ fontSize: 18, marginBottom: 10, color: 'white' }}>
-                    {' '}Snap{' '}
-                  </Text>
+                  <MaterialIcons name={'lens'} size={80} color={'white'} />
                 </TouchableOpacity>
               </View>
             </Camera>

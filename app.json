@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "august-expo-jam",
-    "description": "An empty new project",
-    "slug": "august-expo-jam",
+    "name": "snap-snap",
+    "description": "Snap some pics and flip through your pics",
+    "slug": "snap-snap",
     "privacy": "public",
     "sdkVersion": "20.0.0",
     "version": "1.0.0",
@@ -10,8 +10,7 @@
     "primaryColor": "#cccccc",
     "icon": "./assets/icons/app-icon.png",
     "loading": {
-      "icon": "./assets/icons/loading-icon.png",
-      "hideExponentText": false
+      "hideExponentText": true
     },
     "packagerOpts": {
       "assetExts": ["ttf", "mp4"]
