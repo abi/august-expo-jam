@@ -78,8 +78,9 @@ export default class CameraExample extends React.Component {
         <View style={{ flex: 1 }}>
           <LinearGradient
             colors={[
-              'rgba(0, 0, 0, 1)',
+              'rgba(0, 0, 0, 0.8)',
               'rgba(0, 0, 0, 0.4)',
+              'rgba(0, 0, 0, 0.2)',
               'rgba(0, 0, 0, 0)',
             ]}
             style={{
