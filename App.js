@@ -10,7 +10,7 @@ import {
   StatusBar,
   Animated,
 } from 'react-native';
-import { Camera, Permissions } from 'expo';
+import { Camera, Permissions, LinearGradient } from 'expo';
 import { MaterialIcons } from '@expo/vector-icons';
 
 export default class CameraExample extends React.Component {
@@ -70,20 +70,35 @@ export default class CameraExample extends React.Component {
       });
 
       const iconProps = {
-        size: 30,
+        size: 20,
         color: 'white',
       };
 
       return (
         <View style={{ flex: 1 }}>
+          <LinearGradient
+            colors={[
+              'rgba(0, 0, 0, 1)',
+              'rgba(0, 0, 0, 0.4)',
+              'rgba(0, 0, 0, 0)',
+            ]}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              zIndex: 99,
+              width: width,
+              height: height / 12 + 10,
+            }}
+          />
           <Animated.View
             style={{
               position: 'absolute',
-              top: 20,
+              top: 10,
               left: 0,
               zIndex: 100,
               width: width * 2,
-              height: height / 10,
+              height: height / 12,
               paddingLeft: width / 2,
               paddingRight: width / 2,
               transform: [
